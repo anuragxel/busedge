@@ -64,7 +64,7 @@ def img_callback(image, args):
     noop_filter.send(input_frame)
     # rospy.loginfo('I heard image at %.4f, %.4f, %.4f and packed it to from_client.', CUR_GPS.latitude, CUR_GPS.longitude, CUR_GPS.altitude)
 
-    show_flag = True
+    show_flag = False
     if show_flag:
         cv2.namedWindow("Raw images", 0)
         cv2.imshow("Raw images", frame[:, :, ::-1])

@@ -2,12 +2,12 @@
 <launch>
     <arg name="visualize" default="false"/>
     <arg name="undistort" default="false"/>
-    <!-- launch video stream -->
-    <include file="$(find video_stream_opencv)/launch/camera.launch" >
+   <!-- launch video stream -->
+   <include file="$(find video_stream_opencv)/launch/camera.launch" >
    		<!-- node name and ros graph name -->
-	  	<arg name="camera_name" value="camera1" />
+	  	<arg name="camera_name" value="camera5" />
 	  	<!-- url of the video stream -->
-	  	<arg name="video_stream_provider" value="rtsp://182.168.1.101/stream0" />
+	  	<arg name="video_stream_provider" value="rtsp://182.168.1.107/stream0" />
 	  	<!-- set camera fps to (does nothing on a stream)-->
 	  	<!-- <arg name="set_camera_fps" value="30"/> -->
       	<!-- set buffer queue size of frame capturing to -->
@@ -15,10 +15,10 @@
 	  	<!-- throttling the querying of frames to -->
 	  	<arg name="fps" value="5" />
 	  	<!-- setting frame_id -->
-	  	<arg name="frame_id" value="ipcam1_frame" />
+	  	<arg name="frame_id" value="ipcam5_frame" />
 	  	<!-- camera info loading, take care as it needs the "file:///" at the start , e.g.:
 	  	"file:///$(find your_camera_package)/config/your_camera.yaml" -->
-	  	<arg name="camera_info_url" value="file:///$(find video_stream_opencv)/config/1080p/camera1.yaml" />
+	  	<arg name="camera_info_url" value="file:///$(find video_stream_opencv)/config/720p/camera5.yaml" />
 	  	<!-- flip the image horizontally (mirror it) -->
 	  	<arg name="flip_horizontal" value="false" />
 	  	<!-- flip the image vertically -->
@@ -26,9 +26,8 @@
 	  	<!-- visualize on an image_view window the stream generated -->
 	  	<arg name="visualize" value="$(arg visualize)" />
 		<arg name="undistort" value="$(arg undistort)" />
-    </include>
-    <node if="$(arg undistort)" name="image_proc1" pkg="image_proc" type="image_proc" ns="camera1/"/>
-    <node name="compress_param1" pkg="dynamic_reconfigure" type="dynparam" args="set /camera1/image_raw/compressed jpeg_quality 100"/>
-    <!-- <node name="reopen_param1" pkg="dynamic_reconfigure" type="dynparam" args="set /camera1/camera1_stream reopen_on_read_failure True"/> -->
-    <!-- <node name="compress_param1" pkg="dynamic_reconfigure" type="dynparam" args="set /camera1/image_raw/compressed format jpeg"/> -->
+   </include>
+   <node if="$(arg undistort)" name="image_proc5" pkg="image_proc" type="image_proc" ns="camera5/"/>
+   <node name="compress_param5" pkg="dynamic_reconfigure" type="dynparam" args="set /camera5/image_raw/compressed jpeg_quality 100"/>
+   <!-- <node name="compress_param5" pkg="dynamic_reconfigure" type="dynparam" args="set /camera5/image_raw/compressed format png"/> -->
 </launch>
