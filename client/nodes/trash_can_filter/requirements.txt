@@ -1,0 +1,12 @@
+gabriel-server
+gabriel_protocol
+imageio
+protobuf==3.20.0
+py-cpuinfo
+PyQt5
+pyzmq==18.1
+websockets==8.0
+zmq
+pyyaml==5.1
+git+https://github.com/sxhxliang/detectron2_backbone.git
+piexif
