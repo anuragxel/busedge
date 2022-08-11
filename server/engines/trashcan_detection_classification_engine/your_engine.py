@@ -75,7 +75,7 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
             return cognitive_engine.create_result_wrapper(status)
         extras = cognitive_engine.unpack_extras(busedge_pb2.EngineFields, input_frame)
         print(f"{extras=}")
-        
+
         gps = [
             extras.gps_data.latitude,
             extras.gps_data.longitude,
@@ -109,6 +109,7 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
             self.pred_counter += 1
             classification, confidence = _classify(self.classifier, _image_to_normalized_tensor(cutout), CATEGORIES, 0.87)
             det_img_dir = det_img_folder + img_name
+            # save it next to execution of engine
             cutout.save("./images/" + det_img_dir)
             if self.use_livemap:
                 self.db_manager.insert_detection(
@@ -116,7 +117,8 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
                     gps[1],
                     gps[2],
                     self.pred_counter,
-                    "./images/" + det_img_dir,
+                    # but this is relative to /var/www/html/, so we symlink to /cloudletImages/
+                    "./cloudletImages/" + det_img_dir,
                     [0, 0, 1000, 1000],
                     classification,
                     camera_id,
