@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from asyncio.windows_events import NULL
 import os
 
 import psycopg2
@@ -32,7 +31,7 @@ CREATE_DETECTION_TABLE = "CREATE TABLE detection(\
                        bounding_box             INTEGER[4], \
                        image_dir                    TEXT     NOT NULL, \
                        image_width              INTEGER NOT NULL, \
-                       image_height             INTEGER NOT NULL,);"
+                       image_height             INTEGER NOT NULL);"
 
 CREATE_TRAJECTORY_TABLE = "CREATE TABLE trajectory(\
                       id_number                SERIAL PRIMARY KEY      NOT NULL, \
