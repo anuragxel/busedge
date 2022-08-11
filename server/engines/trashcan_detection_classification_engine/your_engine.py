@@ -111,6 +111,7 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
             det_img_dir = det_img_folder + img_name
             # save it next to execution of engine
             cutout.save("./images/" + det_img_dir)
+            logger.info("size" + cutout.width + " " + cutout.height)
             if self.use_livemap:
                 self.db_manager.insert_detection(
                     gps[0],
@@ -119,12 +120,13 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
                     self.pred_counter,
                     # but this is relative to /var/www/html/, so we symlink to /cloudletImages/
                     "./cloudletImages/" + det_img_dir,
+                    cutout.width,
+                    cutout.height
                     [0, 0, 1000, 1000],
                     classification,
                     camera_id,
                     timestamp,
-                    cutout.width,
-                    cutout.height
+                   
                 )
 
         result_wrapper = gabriel_pb2.ResultWrapper()
