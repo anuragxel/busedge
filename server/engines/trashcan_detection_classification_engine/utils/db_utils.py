@@ -89,12 +89,12 @@ class DB_Manager:
             logger.error(error)
 
     def insert_detection(
-        self, lat, long, alt, img_id, img_dir, bbox, cls, cam_id, timestamp
+        self, lat, long, alt, img_id, img_dir, img_width, img_height, bbox, cls, cam_id, timestamp
     ):
         """insert multiple vendors into the vendors table"""
 
-        SQL = "INSERT INTO detection (id_number, detection_id, camera_id, timestamp,  date, type, latitude, longitude, altitude, bounding_box, image_dir) \
-               VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        SQL = "INSERT INTO detection (id_number, detection_id, camera_id, timestamp,  date, type, latitude, longitude, altitude, bounding_box, image_dir, image_width, image_height) \
+               VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         try:
             # execute the INSERT statement
@@ -113,6 +113,8 @@ class DB_Manager:
                     alt,
                     [int(bbox[i]) for i in range(4)],
                     img_dir,
+                    img_width,
+                    img_height
                 ),
             )
             # commit the changes to the database

@@ -122,7 +122,9 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
                     [0, 0, 1000, 1000],
                     classification,
                     camera_id,
-                    timestamp
+                    timestamp,
+                    cutout.width,
+                    cutout.height
                 )
 
         result_wrapper = gabriel_pb2.ResultWrapper()
