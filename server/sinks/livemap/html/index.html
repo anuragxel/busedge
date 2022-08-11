@@ -11,6 +11,7 @@ SPDX-License-Identifier: Apache-2.0
 initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="stylesheet" type="text/css" href="leaflet.css"/>
 <script type="text/javascript" src="leaflet.js"></script>
+<script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
 <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 
   <style>
@@ -53,7 +54,7 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <div id="map"></div>
   <script>
       /* SETUP THE MAP, ITS LEGEND AND NAVLAB MARKER */
-      var map = L.map('map').setView([40.4475,-79.9675],11); // for Pit
+      var map = L.map('map').setView([40.4475,-79.9675],16); // for Pit
       
       L.tileLayer(
         'http://pothole.ahs.ri.cmu.edu/osm/{z}/{x}/{y}.png',
@@ -85,10 +86,27 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         const entries = await response.json();
         return entries;
       }
-
       let detections = fetchDetectionsJSON().then(detections => {
-         detections.forEach(detection => {
-          // draw a detection
+
+        var allPoints = turf.featureCollection(detections.map(d => turf.point([d.latitude, d.longitude], d)))
+        console.log(allPoints)
+        var clustered = turf.clustersDbscan(allPoints, 15, {
+          units:"meters",
+          "minPoints":1
+        });
+        turf.clusterEach(clustered, 'cluster', function (pointsInCluster, clusterValue, idx) {
+          // this is the representative point for a cluster
+          let representative = pointsInCluster.features[0]
+          //good ol max loop, choose largest image
+          pointsInCluster.features.forEach(element => {
+            if(element.properties.width*element.properties.height > representative.properties.width*representative.properties.height) {
+              representative = element;
+            }
+          });
+
+          // and this is the associated "detection data"
+          let detection = representative.properties
+
           let detectionMarker = L.marker(
             [detection.latitude, detection.longitude],
             {radius: 10}
@@ -104,7 +122,8 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             `
             )
           detectionMarker.addTo(map)
-         });
+        })
+
       });
 
 </script>
