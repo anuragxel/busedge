@@ -1,0 +1,4 @@
+### REQUIRED:
+db-uri = "postgres://osm:busedge@localhost:5432/livemap_db"
+db-schema = "public"
+db-anon-role = "postgres"

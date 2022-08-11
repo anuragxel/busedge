@@ -54,6 +54,6 @@ SPDX-License-Identifier: Apache-2.0
 
 ## Launch LiveMap
 
-1. Run SQL listener: `./nodejs/nodeListen.js`
+1. Expose Postgres database via `./postgrest config` run in `postgrest` folder
 2. Open LiveMap webpage: `http://deluge.elijah.cs.cmu.edu/index.html`
    (or your own web server.)
