@@ -120,7 +120,7 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
                     # but this is relative to /var/www/html/, so we symlink to /cloudletImages/
                     "./cloudletImages/" + det_img_dir,
                     cutout.width,
-                    cutout.height
+                    cutout.height,
                     [0, 0, 1000, 1000],
                     classification,
                     camera_id,
