@@ -93,13 +93,14 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             [detection.latitude, detection.longitude],
             {radius: 10}
           );
-          let timestamp = new Date(detection.timestamp).toTimeString()
+          let timestamp = Date(detection.timestamp)
           let lat = detection.latitude.toFixed(4)
           let long = detection.longitude.toFixed(4)
           detectionMarker.bindPopup(
             `${detection.id_number}: <b>${detection.type}</b><br>
             Taken on ${timestamp} by Camera ${detection.camera_id}.<br>
-            GPS: (${lat},${long}) 
+            GPS: (${lat},${long})<br>
+            <img src='http://pothole.ahs.ri.cmu.edu/images/${detection.image_dir}'></img>
             `
             )
           detectionMarker.addTo(map)
