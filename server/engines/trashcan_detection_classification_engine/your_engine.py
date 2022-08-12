@@ -106,6 +106,8 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
 
 
         for cutout in cutouts:
+            # we would like to have images that are at least "COCO medium"
+            if cutout.width * cutout.height < 32**2: continue
             self.pred_counter += 1
             classification, confidence = _classify(self.classifier, _image_to_normalized_tensor(cutout), CATEGORIES, 0.7)
             det_img_dir = det_img_folder + img_name
