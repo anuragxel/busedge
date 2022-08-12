@@ -113,6 +113,7 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
             det_img_dir = det_img_folder + img_name
             # save it next to execution of engine
             cutout.save("./images/" + det_img_dir)
+            logger.info("Detection saved")
             if self.use_livemap:
                 self.db_manager.insert_detection(
                     gps[0],
