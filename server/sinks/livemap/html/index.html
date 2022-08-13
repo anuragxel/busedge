@@ -69,16 +69,19 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
               '<p>This map reports the state of trash cans around Pittsburgh as recorded by the BusEdge platform. Click on a marker to see more. <br>' +
               '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-full.png" style="width:30px;height:auto;">Full</img>' +
               '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-empty.png" style="width:30px;height:auto;">Empty</img>' +
-              '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-garbage.png" style="width:30px;height:auto;">Garbage Bag</img>'+
-              '<br><br>' +
-              'We make a few assumptions, that might not be obvious. TL;DR: Any trash = Empty, only pikc large ones ' +
+              '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-garbage.png" style="width:30px;height:auto;">Garbage Bag</img><br>'+
+              '<br>' +
+              'We make a few assumptions, that might not be immediately obvious. <br>' +
+              'TL;DR: Any trash => Full and only consider images that are kind of large. <br>' +
+              'For more info read the accompanying paper (RISS Paper Working Journal 2022) <br>' +
               'Created by Tim Storm in the NavLab as part of RISS 2022 <br>';
+          div.onclick = function() {
+            div.setAttribute("hidden", "hidden");
+          }
           return div;
       };
-      legend.onClick = function() {
-        legend.remove();
-      }
       legend.addTo(map)
+      
 
       let navlabMarker = L.marker(
         [40.44342797936527, -79.94560267283263],
@@ -122,7 +125,7 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
       let detections = fetchDetectionsJSON().then(detections => {
 
         var allPoints = turf.featureCollection(detections.map(d => turf.point([d.latitude, d.longitude], d)))
-        var clustered = turf.clustersDbscan(allPoints, 30, {
+        var clustered = turf.clustersDbscan(allPoints, 15, {
           units:"meters",
           "minPoints":1
         });
