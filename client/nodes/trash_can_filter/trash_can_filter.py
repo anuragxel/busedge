@@ -21,10 +21,8 @@ class CanFilter():
 
     def send(self, image, show_flag=False):
         output_dict = self.detect(image)
-        if (len(output_dict["instances"]) > 0) or True:
-            rospy.loginfo("should be sending somethign")
+        if len(output_dict["instances"]) > 0:
             if show_flag:
-                rospy.loginfo("should not be here")
                 visualizer = Visualizer(image)
                 out_image = visualizer.draw_instance_predictions(output_dict["instances"].to("cpu"))
 

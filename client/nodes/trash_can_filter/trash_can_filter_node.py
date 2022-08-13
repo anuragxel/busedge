@@ -42,7 +42,7 @@ def run_node(filter_obj, camera_name):
         queue_size=1,
         buff_size=2 ** 24,
     )
-    #rospy.loginfo(f"Publishing filtered data on {pub.resolved_name}")
+    rospy.loginfo(f"Publishing filtered data on {pub.resolved_name}")
 
     gps_sub = rospy.Subscriber("/fix", NavSatFix, gps_callback, queue_size=1)
 
@@ -72,6 +72,7 @@ def img_callback(image, args):
 
     if send_flag == True:
         # save the results as the self-defined protobuf format and serilize it.
+        rospy.loginfo("Sending candidate frame")
         _, jpeg_frame = cv2.imencode(".jpg", frame)
 
         input_frame = gabriel_pb2.InputFrame()
@@ -112,4 +113,4 @@ def gps_callback(data):
 
 
 if __name__ == "__main__":
-    run_node("camera1")
+    run_node("camera5")
