@@ -74,7 +74,6 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
             status = gabriel_pb2.ResultWrapper.Status.WRONG_INPUT_FORMAT
             return cognitive_engine.create_result_wrapper(status)
         extras = cognitive_engine.unpack_extras(busedge_pb2.EngineFields, input_frame)
-        print(f"{extras=}")
 
         gps = [
             extras.gps_data.latitude,
@@ -100,7 +99,7 @@ class TrashCanDetectionClassificationEngine(cognitive_engine.Engine):
         time_end = time.time()
         time_cost = time_end - time_start
         logger.info("Received an image, detection took {} seconds".format(time_cost))
-
+        logger.info(f"Found {len(cutouts)} trash cans")
         det_img_folder = time.strftime("%Y_%m_%d/")
         os.makedirs("./images/" + det_img_folder, exist_ok=True)
 
