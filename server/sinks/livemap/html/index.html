@@ -67,19 +67,52 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
           div.innerHTML = 
               '<p><b>BusEdge trash can map</b></p><hr>' +
               '<p>This map reports the state of trash cans around Pittsburgh as recorded by the BusEdge platform. Click on a marker to see more. <br>' +
+              '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-full.png" style="width:30px;height:auto;">Full</img>' +
+              '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-empty.png" style="width:30px;height:auto;">Empty</img>' +
+              '<img src="http://pothole.ahs.ri.cmu.edu/images/marker-garbage.png" style="width:30px;height:auto;">Garbage Bag</img>'+
+              '<br><br>' +
+              'We make a few assumptions, that might not be obvious. TL;DR: Any trash = Empty, only pikc large ones ' +
               'Created by Tim Storm in the NavLab as part of RISS 2022 <br>';
           return div;
       };
+      legend.onClick = function() {
+        legend.remove();
+      }
       legend.addTo(map)
 
       let navlabMarker = L.marker(
         [40.44342797936527, -79.94560267283263],
         {radius: 15}
       )
-      navlabMarker.bindPopup("This is where NavLab (this projects origin) is located.")
-      navlabMarker.addTo(map)
 
-      /* FETCH DATABASE ENTRIES */
+      let fullIcon = L.icon({
+        iconUrl:"http://pothole.ahs.ri.cmu.edu/images/marker-full.png",
+        //iconSize: [20,20]
+      })
+      let emptyIcon = L.icon({
+        iconUrl:"http://pothole.ahs.ri.cmu.edu/images/marker-empty.png",
+        //iconSize: [20,20]
+      })
+      let bagIcon = L.icon({
+        iconUrl:"http://pothole.ahs.ri.cmu.edu/images/marker-garbage.png",
+        //iconSize: [20,20]
+      })
+      let unsureIcon = L.icon({
+        iconUrl:"http://pothole.ahs.ri.cmu.edu/images/marker-icon.png",
+        //iconSize: [20,20]
+      })
+      const iconMap = new Map();
+      iconMap.set("Empty", emptyIcon);
+      iconMap.set("Full", fullIcon);
+      iconMap.set("Garbage Bag", bagIcon);
+      iconMap.set("Unsure", unsureIcon);
+
+      //navlabMarker.bindPopup("This is where NavLab (this projects origin) is located.")
+      //navlabMarker.addTo(map)
+
+      /* FETCH DATABASE ENTRIES AND PLOT THEM */
+      let allMapMarkers = [];
+
       let url = 'http://pothole.ahs.ri.cmu.edu:3000/detection';
       async function fetchDetectionsJSON() {
         const response = await fetch(url);
@@ -89,40 +122,52 @@ initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
       let detections = fetchDetectionsJSON().then(detections => {
 
         var allPoints = turf.featureCollection(detections.map(d => turf.point([d.latitude, d.longitude], d)))
-        console.log(allPoints)
-        var clustered = turf.clustersDbscan(allPoints, 15, {
+        var clustered = turf.clustersDbscan(allPoints, 30, {
           units:"meters",
           "minPoints":1
         });
+
         turf.clusterEach(clustered, 'cluster', function (pointsInCluster, clusterValue, idx) {
           // this is the representative point for a cluster
           let representative = pointsInCluster.features[0]
+          let isFull = (representative.properties.type == "Full")
           //good ol max loop, choose largest image
           pointsInCluster.features.forEach(element => {
-            if(element.properties.width*element.properties.height > representative.properties.width*representative.properties.height) {
+           if(element.properties.width*element.properties.height > representative.properties.width*representative.properties.height) {
               representative = element;
             }
           });
 
           // and this is the associated "detection data"
           let detection = representative.properties
+          icon = iconMap.get(detection.type)
 
           let detectionMarker = L.marker(
             [detection.latitude, detection.longitude],
-            {radius: 10}
+            {radius: 10, icon: iconMap.get(detection.type)}
           );
-          let timestamp = Date(detection.timestamp)
+          let timestamp = new Date(0)
+          timestamp.setUTCSeconds(detection.timestamp)
+          timestamp = timestamp.toLocaleString("de")
           let lat = detection.latitude.toFixed(4)
           let long = detection.longitude.toFixed(4)
           detectionMarker.bindPopup(
             `${detection.id_number}: <b>${detection.type}</b><br>
             Taken on ${timestamp} by Camera ${detection.camera_id}.<br>
             GPS: (${lat},${long})<br>
-            <img src='http://pothole.ahs.ri.cmu.edu/images/${detection.image_dir}'></img>
+            <img src='http://pothole.ahs.ri.cmu.edu/images/${detection.image_dir}' height=200></img>
             `
             )
-          detectionMarker.addTo(map)
+          allMapMarkers.push(detectionMarker)
+          
         })
+        allMapMarkers.forEach(marker => {
+          marker.addTo(map)
+        });
+
+        /* FIT MAP VIEW TO SEE ALL MARKERS */
+        var group = new L.featureGroup(allMapMarkers);
+        map.fitBounds(group.getBounds().pad(0.1));
 
       });
 
