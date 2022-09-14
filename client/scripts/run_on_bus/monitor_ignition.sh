@@ -16,7 +16,7 @@ done
 
 echo "The ignition is off with value ${signal}. Now starting to stop the data collection!"
 echo "Stopping the rosbag record node..."
-RECORDS_FOLDER="/media/albert/Elements/RECORDS"
+RECORDS_FOLDER="/media/admin/Elements/RECORDS"
 if [ -d ${RECORDS_FOLDER} ] ; then
     echo "Directory ${RECORDS_FOLDER} exists."
 else

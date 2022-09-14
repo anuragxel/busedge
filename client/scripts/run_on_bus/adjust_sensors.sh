@@ -6,7 +6,7 @@
 
 # Environments activate
 source /opt/ros/melodic/setup.bash
-source /home/albert/gabriel-BusEdge/client/ros_workspace/devel/setup.bash
+source /home/admin/busedge/client/ros_workspace/devel/setup.bash
 roscore &
 sleep 2
 rosrun rqt_image_view rqt_image_view &

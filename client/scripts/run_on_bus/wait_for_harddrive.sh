@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-RECORDS_FOLDER="/media/albert/Elements/RECORDS"
+RECORDS_FOLDER="/media/admin/Elements/RECORDS"
 ((count = 10000))                            # Maximum number to try.
 while [[ $count -ne 0 ]] ; do
     if [ -d ${RECORDS_FOLDER} ] ; then

@@ -6,11 +6,11 @@
 
 # Environments activate
 source /opt/ros/melodic/setup.bash
-source /home/albert/gabriel-BusEdge/client/ros_workspace/devel/setup.bash
+source /home/admin/busedge/client/ros_workspace/devel/setup.bash
 
 sleep 3
 # RECORDS_FOLDER="/home/albert/RECORDS"
-RECORDS_FOLDER="/media/albert/Elements/RECORDS"
+RECORDS_FOLDER="/media/admin/Elements/RECORDS"
 
 ((count = 1000))                            # Maximum number to try.
 while [[ $count -ne 0 ]] ; do

@@ -8,7 +8,7 @@ Before=busedge_launch_all.service
 
 [Service]
 Type=oneshot
-ExecStart=/home/albert/gabriel-BusEdge/client/scripts/run_on_bus/wait_for_network.sh
+ExecStart=/home/admin/busedge/client/scripts/run_on_bus/wait_for_network.sh
 TimeoutStartSec=300s
 
 [Install]

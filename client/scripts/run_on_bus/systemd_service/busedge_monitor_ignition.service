@@ -10,7 +10,7 @@ After=busedge_record.service
 
 [Service]
 Type=simple
-ExecStart=/home/albert/gabriel-BusEdge/client/scripts/run_on_bus/monitor_ignition.sh
+ExecStart=/home/admin/busedge/client/scripts/run_on_bus/monitor_ignition.sh
 # Restart the service on non-zero exit code when terminated by a signal other than SIGHUP, SIGINT, SIGTERM or SIGPIPE
 Restart=on-failure
 RestartSec=1

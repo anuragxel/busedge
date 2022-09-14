@@ -35,26 +35,26 @@ def main():
     producer_wrappers = []
 
     ## Two common nodes: trajectory and no-operation nodes
-    #gps_noop_filter = Source("gps")
-    #p_gps = multiprocessing.Process(
-    #    target=trajectory_node.run_node, args=(gps_noop_filter,)
-    #)
-    #p_gps.start()
-    #producer_wrappers.append(gps_noop_filter.get_producer_wrapper())
+    gps_noop_filter = Source("gps")
+    p_gps = multiprocessing.Process(
+       target=trajectory_node.run_node, args=(gps_noop_filter,)
+    )
+    p_gps.start()
+    producer_wrappers.append(gps_noop_filter.get_producer_wrapper())
 
-    #source_name = 'noop'
-    #camera_name = 'camera1'
-    #filter_obj = Source(source_name)
-    #multiprocessing.Process(target=image_noop_node.run_node,
-    #                         args=(filter_obj, camera_name)).start()
-    #producer_wrappers.append(filter_obj.get_producer_wrapper())
-
-    source_name = 'trash_can_filter' 
-    camera_name = 'camera5'
+    source_name = 'noop'
+    camera_name = 'camera1'
     filter_obj = Source(source_name)
-    multiprocessing.Process(target=trash_can_filter_node.run_node,
-                             args=(filter_obj, camera_name, )).start()
+    multiprocessing.Process(target=image_noop_node.run_node,
+                            args=(filter_obj, camera_name)).start()
     producer_wrappers.append(filter_obj.get_producer_wrapper())
+
+    # source_name = 'trash_can_filter' 
+    # camera_name = 'camera5'
+    # filter_obj = Source(source_name)
+    # multiprocessing.Process(target=trash_can_filter_node.run_node,
+    #                          args=(filter_obj, camera_name, )).start()
+    # producer_wrappers.append(filter_obj.get_producer_wrapper())
 
     # Launch nodes given source name:
     for source in args.source_name:

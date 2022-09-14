@@ -10,7 +10,7 @@ After=busedge_run_roscore.service
 [Service]
 Environment=DISPLAY=:0 XAUTHORITY=/run/user/1000/gdm/Xauthority
 Type=simple
-ExecStart=/home/albert/gabriel-BusEdge/client/scripts/run_on_bus/sensor_driver.sh
+ExecStart=/home/admin/busedge/client/scripts/run_on_bus/sensor_driver.sh
 # Restart the service on non-zero exit code when terminated by a signal other than SIGHUP, SIGINT, SIGTERM or SIGPIPE
 Restart=on-failure
 RestartSec=1

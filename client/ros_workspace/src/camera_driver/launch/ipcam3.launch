@@ -7,7 +7,7 @@
    		<!-- node name and ros graph name -->
 	  	<arg name="camera_name" value="camera3" />
 	  	<!-- url of the video stream -->
-	  	<arg name="video_stream_provider" value="rtsp://admin:SV123456@182.168.1.103:554/Streaming/Channels/103" />
+	  	<arg name="video_stream_provider" value="rtsp://admin:SV123456@182.168.1.103:554/Streaming/Channels/101" />
 	  	<!-- set camera fps to (does nothing on a stream)-->
 	  	<!-- <arg name="set_camera_fps" value="30"/> -->
       	<!-- set buffer queue size of frame capturing to -->

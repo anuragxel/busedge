@@ -111,7 +111,7 @@ SPDX-License-Identifier: Apache-2.0
 
     ```sh
     cd ros_workspace
-    catkin_make
+    catkin_make -DCATKIN_SKIP_TESTING=1
     source devel/setup.bash
     ```
 

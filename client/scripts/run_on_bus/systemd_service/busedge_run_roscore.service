@@ -9,7 +9,7 @@ After=busedge_launch_all.service
 
 [Service]
 Type=simple
-ExecStart=/home/albert/gabriel-BusEdge/client/scripts/run_on_bus/run_roscore.sh
+ExecStart=/home/admin/busedge/client/scripts/run_on_bus/run_roscore.sh
 # Restart the service on non-zero exit code when terminated by a signal other than SIGHUP, SIGINT, SIGTERM or SIGPIPE
 Restart=on-failure
 RestartSec=1
