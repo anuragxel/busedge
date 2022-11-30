@@ -1,0 +1,30 @@
+// SPDX-FileCopyrightText: 2021 Carnegie Mellon University
+//
+// SPDX-License-Identifier: Apache-2.0
+//https://stackoverflow.com/questions/23726335/how-to-assign-to-repeated-field
+syntax = "proto3";
+
+package busedge;
+
+
+message EngineFields {
+    repeated float latitude_batch = 1;
+    repeated float longitude_batch = 2;
+    repeated float altitude_batch = 3;
+    repeated float heading_batch = 4;
+    repeated string image_filename_batch = 5;
+    repeated float cw_assign_batch = 6;
+
+    message gps {
+        float latitude = 1;
+        float longitude = 2;
+        float altitude = 3;
+	float heading = 4;
+    }
+    gps gps_data = 7;
+    string image_filename = 8;
+    bytes filter_results = 9;
+
+
+
+}
