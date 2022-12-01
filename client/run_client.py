@@ -14,7 +14,7 @@ from gabriel_client.websocket_client import WebsocketClient
 from nodes.common import docker_subsriber, image_noop_node, trajectory_node
 from nodes.common.consumers import consumer
 
-from nodes.trash_can_filter import trash_can_filter_node
+#from nodes.trash_can_filter import trash_can_filter_node
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
