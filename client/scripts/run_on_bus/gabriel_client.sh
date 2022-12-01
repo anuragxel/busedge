@@ -23,18 +23,18 @@ else
     exit 0
 fi
 
-RECORDS_FOLDER="/media/admin/Elements/RECORDS"
-((count = 1000))                            # Maximum number to try.
-while [[ $count -ne 0 ]] ; do
-    if [ -d ${RECORDS_FOLDER} ] ; then
-        echo "Directory ${RECORDS_FOLDER} exists."
-        ((count = 1))                      # If okay, flag to exit loop.
-    else
-        echo "Directory ${RECORDS_FOLDER} does not exists. Retrying"
-        sleep 2
-    fi
-    ((count = count - 1))                  # So we don't go forever.
-done
+# RECORDS_FOLDER="/media/admin/Elements/RECORDS"
+# ((count = 1000))                            # Maximum number to try.
+# while [[ $count -ne 0 ]] ; do
+#     if [ -d ${RECORDS_FOLDER} ] ; then
+#         echo "Directory ${RECORDS_FOLDER} exists."
+#         ((count = 1))                      # If okay, flag to exit loop.
+#     else
+#         echo "Directory ${RECORDS_FOLDER} does not exists. Retrying"
+#         sleep 2
+#     fi
+#     ((count = count - 1))                  # So we don't go forever.
+# done
 
 # export BUS_EMAIL_FROM_ADDR=
 # export BUS_EMAIL_PASSWORD=
