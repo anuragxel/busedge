@@ -77,11 +77,11 @@ cd "${WORKSPACE}"
 export QT_X11_NO_MITSHM=1
 # Run client
 # docker run --net=host --rm detector python3 sign_filter_node.py &
-python3 run_client.py 2> /home/albert/LOG/client_$(date +%Y-%m-%d_%H:%M:%S).log
+#python3 run_client.py 2> /home/albert/LOG/client_$(date +%Y-%m-%d_%H:%M:%S).log
 
 # python3 run_client.py -v -r -c 1 2 3 4 5 2> /home/albert/LOG/client_$(date +%Y-%m-%d_%H:%M:%S).log
 
-#python3 /home/albert/busedge/client/run_client.py --source-name crosswalk_filter3 & docker run --net=host --rm  -v "$PWD":/home/appuser/client_node -it cw_detector python3 crosswalk_change_filter_with_heading_node_mp_gps_buffer.py
+python3 run_client.py --source-name crosswalk_filter3 & docker run --net=host --rm  -v "$PWD":/home/appuser/client_node -it cw_detector python3 crosswalk_change_filter_with_heading_node_mp_gps_buffer.py
 
 sleep 1
 exit 0
